@@ -1,0 +1,280 @@
+{
+    "👨 爸爸": [
+        {
+            "code": "2330.TW",
+            "name": "台積電",
+            "shares": 2000,
+            "cost": 712.42
+        },
+        {
+            "code": "2317.TW",
+            "name": "鴻海",
+            "shares": 17737,
+            "cost": 150.0
+        },
+        {
+            "code": "2308.TW",
+            "name": "台達電",
+            "shares": 749,
+            "cost": 265.07
+        },
+        {
+            "code": "2382.TW",
+            "name": "廣達",
+            "shares": 450,
+            "cost": 278.56
+        },
+        {
+            "code": "3008.TW",
+            "name": "大立光",
+            "shares": 300,
+            "cost": 2588.83
+        },
+        {
+            "code": "2303.TW",
+            "name": "聯電",
+            "shares": 4000,
+            "cost": 48.88
+        },
+        {
+            "code": "0050.TW",
+            "name": "元大台灣50",
+            "shares": 11800,
+            "cost": 14.92
+        },
+        {
+            "code": "00878.TW",
+            "name": "國泰永續高股息",
+            "shares": 9000,
+            "cost": 20.91
+        },
+        {
+            "code": "00881.TW",
+            "name": "國泰台灣5G+",
+            "shares": 6000,
+            "cost": 20.63
+        },
+        {
+            "code": "2881.TW",
+            "name": "富邦金",
+            "shares": 3796,
+            "cost": 48.59
+        },
+        {
+            "code": "2882.TW",
+            "name": "國泰金",
+            "shares": 4526,
+            "cost": 38.68
+        },
+        {
+            "code": "2884.TW",
+            "name": "玉山金",
+            "shares": 7369,
+            "cost": 22.17
+        },
+        {
+            "code": "2886.TW",
+            "name": "兆豐金",
+            "shares": 4374,
+            "cost": 29.4
+        },
+        {
+            "code": "2885.TW",
+            "name": "元大金",
+            "shares": 2060,
+            "cost": 30.87
+        },
+        {
+            "code": "5880.TW",
+            "name": "合庫金",
+            "shares": 4702,
+            "cost": 0.0
+        },
+        {
+            "code": "2880.TW",
+            "name": "華南金",
+            "shares": 2163,
+            "cost": 0.0
+        },
+        {
+            "code": "2618.TW",
+            "name": "長榮航",
+            "shares": 4000,
+            "cost": 38.19
+        },
+        {
+            "code": "2301.TW",
+            "name": "光寶科",
+            "shares": 150,
+            "cost": 155.0
+        },
+        {
+            "code": "3703.TW",
+            "name": "欣陸",
+            "shares": 5000,
+            "cost": 24.46
+        },
+        {
+            "code": "2034.TW",
+            "name": "允強",
+            "shares": 55,
+            "cost": 0.0
+        },
+        {
+            "code": "2301.TW",
+            "name": "光寶科",
+            "shares": 300,
+            "cost": 157.0
+        }
+    ],
+    "👩 太太": [
+        {
+            "code": "0050.TW",
+            "name": "元大台灣50",
+            "shares": 4400,
+            "cost": 23.1
+        },
+        {
+            "code": "00646.TW",
+            "name": "元大S&P500",
+            "shares": 1000,
+            "cost": 58.45
+        },
+        {
+            "code": "00878.TW",
+            "name": "國泰永續高股息",
+            "shares": 6000,
+            "cost": 17.38
+        },
+        {
+            "code": "00933B.TW",
+            "name": "國泰10Y+金融債",
+            "shares": 4000,
+            "cost": 16.7
+        },
+        {
+            "code": "2303.TW",
+            "name": "聯電",
+            "shares": 1500,
+            "cost": 53.0
+        },
+        {
+            "code": "2317.TW",
+            "name": "鴻海",
+            "shares": 2300,
+            "cost": 209.48
+        },
+        {
+            "code": "2330.TW",
+            "name": "台積電",
+            "shares": 140,
+            "cost": 986.57
+        },
+        {
+            "code": "3045.TW",
+            "name": "台灣大",
+            "shares": 1000,
+            "cost": 103.0
+        }
+    ],
+    "👦 兒子 (大)": [
+        {
+            "code": "0050.TW",
+            "name": "元大台灣50",
+            "shares": 5000,
+            "cost": 10.22
+        },
+        {
+            "code": "00646.TW",
+            "name": "元大S&P500",
+            "shares": 2000,
+            "cost": 61.03
+        },
+        {
+            "code": "2308.TW",
+            "name": "台達電",
+            "shares": 1000,
+            "cost": 183.38
+        },
+        {
+            "code": "2317.TW",
+            "name": "鴻海",
+            "shares": 4253,
+            "cost": 76.14
+        },
+        {
+            "code": "2330.TW",
+            "name": "台積電",
+            "shares": 500,
+            "cost": 864.6
+        },
+        {
+            "code": "2618.TW",
+            "name": "長榮航",
+            "shares": 1000,
+            "cost": 33.1
+        },
+        {
+            "code": "2884.TW",
+            "name": "玉山金",
+            "shares": 1659,
+            "cost": 11.14
+        },
+        {
+            "code": "2886.TW",
+            "name": "兆豐金",
+            "shares": 2172,
+            "cost": 27.03
+        },
+        {
+            "code": "3703.TW",
+            "name": "欣陸",
+            "shares": 1000,
+            "cost": 30.05
+        }
+    ],
+    "👦 兒子 (小)": [
+        {
+            "code": "0050.TW",
+            "name": "元大台灣50",
+            "shares": 5700,
+            "cost": 23.25
+        },
+        {
+            "code": "00646.TW",
+            "name": "元大S&P500",
+            "shares": 1000,
+            "cost": 62.25
+        },
+        {
+            "code": "1301.TW",
+            "name": "台塑",
+            "shares": 600,
+            "cost": 88.6
+        },
+        {
+            "code": "2317.TW",
+            "name": "鴻海",
+            "shares": 1000,
+            "cost": 150.18
+        },
+        {
+            "code": "2330.TW",
+            "name": "台積電",
+            "shares": 1410,
+            "cost": 401.5
+        },
+        {
+            "code": "2618.TW",
+            "name": "長榮航",
+            "shares": 1000,
+            "cost": 33.95
+        },
+        {
+            "code": "2882.TW",
+            "name": "國泰金",
+            "shares": 1118,
+            "cost": 39.62
+        }
+    ]
+}

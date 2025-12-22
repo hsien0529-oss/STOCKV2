@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 東京×野澤溫泉：冬日雙重奏</title>
+    <style>
+        :root {
+            --primary-blue: #2C3E50;
+            --snow-white: #F5F7FA;
+            --accent-gold: #D4AF37;
+            --neon-blue: #00f2ff;
+            --text-dark: #333;
+        }
+        
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--snow-white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* 視覺建議：雪山與夜景漸層  */
+        header {
+            background: linear-gradient(to bottom, #2980b9, #2c3e50);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        h1 { margin: 0; font-size: 24px; letter-spacing: 1px; }
+        h2 { font-size: 20px; border-left: 4px solid var(--primary-blue); padding-left: 10px; margin-top: 30px; }
+        .subtitle { font-size: 14px; opacity: 0.9; margin-top: 10px; }
+        
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+
+        /* 按鈕樣式 */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .btn {
+            display: block;
+            background: white;
+            color: var(--primary-blue);
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+
+        /* 卡片樣式 [cite: 23] */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .tag {
+            background: var(--primary-blue);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* 表格樣式 [cite: 41, 107] */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        th { background: var(--primary-blue); color: white; padding: 8px; text-align: left; }
+        td { border-bottom: 1px solid #ddd; padding: 8px; }
+        
+        /* 導覽列小房子 [cite: 129] */
+        .back-to-home {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: #eee;
+            border-radius: 10px;
+        }
+        .back-to-home a { text-decoration: none; color: #555; font-weight: bold; }
+
+        /* 提醒區塊 */
+        .alert {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header id="home">
+        <h1>2026 東京×野澤溫泉</h1>
+        <div class="subtitle">冬日雙重奏 | 02/15 - 02/22</div>
+        <div class="subtitle">成員：大人×2、國中生×1 [cite: 10]</div>
+    </header>
+
+    <div class="container">
+        <div class="btn-grid">
+            <a href="#itinerary" class="btn">📅 每日行程總表</a>
+            <a href="#transport" class="btn">🚅 Day 2 交通詳情</a>
+            <a href="#base-camps" class="btn">🏨 住宿基地</a>
+            <a href="#city-guide" class="btn">🏙️ 東京區域攻略</a>
+            <a href="#yakiniku" class="btn">🥩 八丁堀燒肉地圖</a>
+            <a href="#airport" class="btn">🚐 機場包車撤退</a>
+        </div>
+
+        <section id="itinerary">
+            <h2>📅 每日行程速覽</h2>
+            <div class="card">
+                <ul style="padding-left: 20px;">
+                    <li><strong>2/15(日)</strong> 抵達東京 → 上野飯店 → 阿美橫丁 [cite: 51]</li>
+                    <li><strong>2/16(一)</strong> 新幹線 → 野澤溫泉 → 租裝備 [cite: 52]</li>
+                    <li><strong>2/17(二)</strong> 全日滑雪 (私人教練) [cite: 53]</li>
+                    <li><strong>2/18(三)</strong> 全日滑雪 + 溫泉巡禮 [cite: 54]</li>
+                    <li><strong>2/19(四)</strong> 返回東京 → 八丁堀 → 秋葉原 [cite: 55]</li>
+                    <li><strong>2/20(五)</strong> 分眾日：高爾夫 vs 台場鋼彈 [cite: 56]</li>
+                    <li><strong>2/21(六)</strong> 都會巡禮 (銀座/六本木) [cite: 57]</li>
+                    <li><strong>2/22(日)</strong> 包車 → 成田機場 (14:00起飛) [cite: 58]</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="base-camps">
+            <h2>🏨 住宿基地 (Base Camps)</h2>
+            
+            <div class="card">
+                <span class="tag">2/15 (1晚)</span>
+                <h3>相鐵 Fresa Inn 上野御徒町</h3>
+                <p>📍 京成上野站步行5分 [cite: 26]</p>
+                <div class="alert">任務：Check-in 後立即將滑雪板寄往野澤民宿 [cite: 27]</div>
+            </div>
+
+            <div class="card">
+                <span class="tag">2/16-19 (3晚)</span>
+                <h3>野澤溫泉民宿</h3>
+                <p>📍 野澤溫泉村內 [cite: 30]</p>
+            </div>
+
+            <div class="card">
+                <span class="tag">2/19-22 (3晚)</span>
+                <h3>MIMARU 東京八丁堀</h3>
+                <p>📍 日比谷線八丁堀站 B1/A3 出口 [cite: 35]</p>
+                <p>🛒 補給：對面即是 Maruetsu Petit 超市</p>
+            </div>
+        </section>
+
+        <section id="transport">
+            <h2>🚅 Day 2 交通詳情 (2/16)</h2>
+            <p><strong>第一段：北陸新幹線 (上野 → 飯山)</strong> [cite: 39]</p>
+            <div class="alert">⚠️ 建議提前30天預約「特大行李席」 [cite: 40]</div>
+            
+            <div class="card">
+                <table>
+                    <tr>
+                        <th>車次</th>
+                        <th>上野發</th>
+                        <th>飯山著</th>
+                        <th>備註</th>
+                    </tr>
+                    <tr>
+                        <td>Hakutaka 551</td>
+                        <td>06:34</td>
+                        <td>08:16</td>
+                        <td>早鳥滑雪</td>
+                    </tr>
+                    <tr>
+                        <td>Hakutaka 553</td>
+                        <td>07:58</td>
+                        <td>09:39</td>
+                        <td>標準推薦</td>
+                    </tr>
+                    <tr>
+                        <td>Hakutaka 555</td>
+                        <td>08:50</td>
+                        <td>10:37</td>
+                        <td>悠閒睡飽</td>
+                    </tr>
+                </table>
+            </div>
+
+            <p><strong>第二段：野澤溫泉 Liner (巴士)</strong></p>
+            <div class="card">
+                <p>📍 乘車點：飯山站 千曲川口 4號月台 [cite: 43]</p>
+                <p>💰 票價：成人 ¥600 / 兒童 ¥300 (現場購票) [cite: 45]</p>
+            </div>
+        </section>
+
+        <section id="yakiniku">
+            <h2>🥩 八丁堀燒肉地圖</h2>
+            <div class="alert">Tip: 第一天抵達飯店時，請櫃檯協助預訂 Day 7 晚餐 [cite: 109]</div>
+
+            <div class="card">
+                <h3>1. 大阪燒肉・雙子 (Futago)</h3>
+                <p>⭐ <strong>首選推薦</strong> | 步行2分 | 預算 ¥6,000</p>
+                <p>特色：氣氛High，店員代烤「超出盤子的牛五花」。</p>
+            </div>
+
+            <div class="card">
+                <h3>2. 燒肉 山 (San)</h3>
+                <p>⭐ 在地口碑 | 步行5分 | 預算 ¥7,000</p>
+                <p>特色：厚切牛舌必點，環境較安靜。</p>
+            </div>
+
+            <div class="card">
+                <h3>3. Alegria Ginza (吃到飽)</h3>
+                <p>⭐ 國中生最愛 | 步行15分 | 預算 ¥5,500</p>
+                <p>特色：巴西烤肉，專攻食量大的男生，肉串桌邊現切。</p>
+            </div>
+        </section>
+
+        <section id="city-guide">
+            <h2>🏙️ 東京區域攻略</h2>
+            <div class="card">
+                <h3>特別行動 (Day 6)</h3>
+                <hr>
+                <p><strong>👨 爸爸：高爾夫</strong></p>
+                <p>神田小川町 (Victoria Golf) / 銀座 (Double Eagle) [cite: 98, 99]</p>
+                <hr>
+                <p><strong>👦 國中生：台場鋼彈</strong></p>
+                <p>Gundam Base Tokyo (DiverCity 7F) [cite: 101]</p>
+                <div class="alert" style="color:red;">⚠️ 關鍵：出發前一週務必上官網抽入場整理券 [cite: 102]</div>
+            </div>
+            
+            <div class="card">
+                <h3>🛍️ 逛街重點</h3>
+                <p><strong>銀座：</strong>Nissan Crossing (4D賽車)、Uniqlo 旗艦店 [cite: 71, 74]</p>
+                <p><strong>原宿：</strong>球鞋聖地 (Atmos, Kicks Lab)、竹下通 [cite: 93, 95]</p>
+                <p><strong>六本木：</strong>展望台看東京鐵塔、TeamLab Borderless [cite: 78, 81]</p>
+            </div>
+        </section>
+
+        <section id="airport">
+            <h2>🚐 Day 8 機場撤退戰</h2>
+            <div class="card">
+                <h3>預約詳情</h3>
+                <p>📅 日期：2026/02/22 (週日)</p>
+                <p>⏰ 建議出發：09:30 AM [cite: 116]</p>
+                <p>🚙 車型需求：<strong>Toyota Hiace (海獅)</strong> [cite: 114]</p>
+                <p>📝 備註欄填寫：「有滑雪板 (Snowboards) 與高爾夫球具 (Golf Bag)」 [cite: 123]</p>
+                <p>💰 預估費用：NT$ 6,500 - 8,500 (Klook/KKday) [cite: 119]</p>
+            </div>
+        </section>
+
+        <footer id="links" style="margin-top: 40px; padding-bottom: 40px;">
+             <div class="btn-grid">
+                <a href="#" class="btn" style="background:#e74c3c; color:white;">🆘 緊急聯絡：台灣駐日代表處</a>
+                <a href="#" class="btn" style="background:#2ecc71; color:white;">🗺️ 野澤溫泉滑雪場地圖</a>
+             </div>
+             
+             <div class="back-to-home">
+                 <a href="#home">🏠 回到首頁 (Back to Home)</a>
+             </div>
+        </footer>
+    </div>
+</body>
+</html>

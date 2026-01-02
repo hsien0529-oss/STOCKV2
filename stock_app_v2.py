@@ -370,20 +370,42 @@ if history_data:
     df_history.index = pd.to_datetime(df_history.index)
     df_history.sort_index(inplace=True)
     
+    # 區間選擇
+    st.write("### 📅 選擇時間區間")
+    range_options = ["1個月", "3個月", "1年", "2年", "全部"]
+    # 使用 horizontal radio
+    selected_range = st.radio("區間", range_options, index=4, horizontal=True, label_visibility="collapsed")
+    
+    # 計算過濾日期
+    end_date = df_history.index.max()
+    start_date = df_history.index.min()
+    
+    if selected_range == "1個月":
+        start_date = end_date - pd.DateOffset(months=1)
+    elif selected_range == "3個月":
+        start_date = end_date - pd.DateOffset(months=3)
+    elif selected_range == "1年":
+        start_date = end_date - pd.DateOffset(years=1)
+    elif selected_range == "2年":
+        start_date = end_date - pd.DateOffset(years=2)
+    
+    # 過濾資料
+    df_filtered = df_history[df_history.index >= start_date]
+
     h_tab1, h_tab2 = st.tabs(["📈 趨勢圖", "📋 詳細數據"])
     
     with h_tab1:
-        st.subheader("資產成長趨勢")
+        st.subheader(f"資產成長趨勢 ({selected_range})")
         # 顯示全家總資產趨勢
-        st.line_chart(df_history['Total'])
+        st.line_chart(df_filtered['Total'])
         
         st.subheader("成員資產比較")
         # 顯示各成員資產 (排除 Total)
-        members_cols = [c for c in df_history.columns if c != 'Total']
-        st.line_chart(df_history[members_cols])
+        members_cols = [c for c in df_filtered.columns if c != 'Total']
+        st.line_chart(df_filtered[members_cols])
         
     with h_tab2:
-        st.dataframe(df_history.style.format("{:,}"), use_container_width=True)
+        st.dataframe(df_filtered.style.format("{:,}"), use_container_width=True)
 else:
     st.info("尚無歷史資料，請持續使用本看板以累積數據。")
 

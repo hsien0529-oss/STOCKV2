@@ -24,11 +24,15 @@ git push -u origin main
 
 echo.
 echo ========================================================
-if %errorlevel% equ 0 (
-    echo    ✅ 上傳成功！ (Upload Successful)
-) else (
-    echo    ❌ 上傳失敗，請檢查網路或是錯誤訊息。
-)
+if %errorlevel% neq 0 goto ERROR
+
+echo    ✅ 上傳成功！ (Upload Successful)
+goto END
+
+:ERROR
+echo    ❌ 上傳失敗，請檢查網路或是錯誤訊息。
+
+:END
 echo ========================================================
 echo.
 pause

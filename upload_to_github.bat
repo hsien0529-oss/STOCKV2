@@ -20,7 +20,7 @@ git commit -m "%commit_msg%"
 
 echo.
 echo [3/3] 正在上傳至 GitHub (Pushing)...
-git push
+git push -u origin main
 
 echo.
 echo ========================================================

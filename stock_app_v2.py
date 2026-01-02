@@ -145,6 +145,12 @@ with st.spinner('更新股價中...'):
 current_year = datetime.datetime.now().year
 with st.spinner(f'計算 {current_year} 年股利中...'):
     dividend_data = get_dividends(all_codes_list, current_year)
+    
+    # 如果今年總股利為 0 (年初可能還沒發)，則改抓去年
+    if sum(dividend_data.values()) == 0:
+        st.toast(f"⚠️ {current_year} 年尚無配息資料，已自動切換顯示 {current_year-1} 年股利。", icon="ℹ️")
+        current_year = current_year - 1
+        dividend_data = get_dividends(all_codes_list, current_year)
 
 # 計算邏輯
 family_summary = []

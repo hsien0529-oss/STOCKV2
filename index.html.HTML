@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,7 @@
             --neon-blue: #00f2ff;
             --text-dark: #333;
         }
-        
+
         body {
             font-family: "Helvetica Neue", Arial, sans-serif;
             margin: 0;
@@ -33,11 +34,30 @@
             border-bottom-right-radius: 30px;
         }
 
-        h1 { margin: 0; font-size: 24px; letter-spacing: 1px; }
-        h2 { font-size: 20px; border-left: 4px solid var(--primary-blue); padding-left: 10px; margin-top: 30px; }
-        .subtitle { font-size: 14px; opacity: 0.9; margin-top: 10px; }
-        
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 20px;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
         /* 按鈕樣式 */
         .btn-grid {
@@ -46,6 +66,7 @@
             gap: 10px;
             margin-top: 20px;
         }
+
         .btn {
             display: block;
             background: white;
@@ -54,11 +75,14 @@
             text-align: center;
             text-decoration: none;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             font-weight: bold;
             transition: transform 0.2s;
         }
-        .btn:active { transform: scale(0.98); }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
 
         /* 卡片樣式 [cite: 23] */
         .card {
@@ -66,9 +90,9 @@
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-        
+
         .tag {
             background: var(--primary-blue);
             color: white;
@@ -78,10 +102,25 @@
         }
 
         /* 表格樣式 [cite: 41, 107] */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-        th { background: var(--primary-blue); color: white; padding: 8px; text-align: left; }
-        td { border-bottom: 1px solid #ddd; padding: 8px; }
-        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        th {
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        td {
+            border-bottom: 1px solid #ddd;
+            padding: 8px;
+        }
+
         /* 導覽列小房子 [cite: 129] */
         .back-to-home {
             text-align: center;
@@ -90,7 +129,12 @@
             background: #eee;
             border-radius: 10px;
         }
-        .back-to-home a { text-decoration: none; color: #555; font-weight: bold; }
+
+        .back-to-home a {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
 
         /* 提醒區塊 */
         .alert {
@@ -104,6 +148,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <header id="home">
@@ -140,12 +185,13 @@
 
         <section id="base-camps">
             <h2>🏨 住宿基地 (Base Camps)</h2>
-            
+
             <div class="card">
                 <span class="tag">2/15 (1晚)</span>
-                <h3>相鐵 Fresa Inn 上野御徒町</h3>
-                <p>📍 京成上野站步行5分 [cite: 26]</p>
-                <div class="alert">任務：Check-in 後立即將滑雪板寄往野澤民宿 [cite: 27]</div>
+                <h3>Hop Inn Tokyo Ueno (東京上野 Hop Inn)</h3>
+                <p>📍 6 Chome-7-19 Ueno, Taito City (東京都台東區上野6-7-19)</p>
+                <p>⏰ Check-in 15:00 | Check-out 11:00</p>
+                <div class="alert">任務：Check-in 後立即將滑雪板寄往野澤民宿 <br> 訂房資訊：2間雙人房 (Double Room with Walk-in Shower)</div>
             </div>
 
             <div class="card">
@@ -166,7 +212,7 @@
             <h2>🚅 Day 2 交通詳情 (2/16)</h2>
             <p><strong>第一段：北陸新幹線 (上野 → 飯山)</strong> [cite: 39]</p>
             <div class="alert">⚠️ 建議提前30天預約「特大行李席」 [cite: 40]</div>
-            
+
             <div class="card">
                 <table>
                     <tr>
@@ -238,7 +284,7 @@
                 <p>Gundam Base Tokyo (DiverCity 7F) [cite: 101]</p>
                 <div class="alert" style="color:red;">⚠️ 關鍵：出發前一週務必上官網抽入場整理券 [cite: 102]</div>
             </div>
-            
+
             <div class="card">
                 <h3>🛍️ 逛街重點</h3>
                 <p><strong>銀座：</strong>Nissan Crossing (4D賽車)、Uniqlo 旗艦店 [cite: 71, 74]</p>
@@ -260,15 +306,16 @@
         </section>
 
         <footer id="links" style="margin-top: 40px; padding-bottom: 40px;">
-             <div class="btn-grid">
+            <div class="btn-grid">
                 <a href="#" class="btn" style="background:#e74c3c; color:white;">🆘 緊急聯絡：台灣駐日代表處</a>
                 <a href="#" class="btn" style="background:#2ecc71; color:white;">🗺️ 野澤溫泉滑雪場地圖</a>
-             </div>
-             
-             <div class="back-to-home">
-                 <a href="#home">🏠 回到首頁 (Back to Home)</a>
-             </div>
+            </div>
+
+            <div class="back-to-home">
+                <a href="#home">🏠 回到首頁 (Back to Home)</a>
+            </div>
         </footer>
     </div>
 </body>
+
 </html>

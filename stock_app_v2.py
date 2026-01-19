@@ -199,11 +199,11 @@ for member, stocks in family_portfolios.items():
             "名稱": item['name'],
             "股數": shares,
             "成本": cost_price,
-            "現價": round(current_price, 2),
-            "市值": int(market_value),
-            "損益": int(unrealized_pl),
-            "報酬率(%)": round(pl_ratio, 2),
-            f"{current_year}股利": int(total_div)
+            "現價": round(current_price, 2) if pd.notna(current_price) else 0,
+            "市值": int(market_value) if pd.notna(market_value) else 0,
+            "損益": int(unrealized_pl) if pd.notna(unrealized_pl) else 0,
+            "報酬率(%)": round(pl_ratio, 2) if pd.notna(pl_ratio) else 0,
+            f"{current_year}股利": int(total_div) if pd.notna(total_div) else 0
         })
     
     df_member = pd.DataFrame(member_data)
@@ -333,13 +333,27 @@ for i, (member, data) in enumerate(processed_data.items()):
             # 轉換回 list of dicts
             new_portfolio = edited_df.to_dict('records')
             
-            # 簡單比對是否需要更新 (長度不同或是內容不同)
-            # 注意：這裡每次 rerun 都會執行，所以要小心無窮迴圈。
-            # Streamlit 的 data_editor 會在使用者修改後觸發 rerun，我們在這裡捕捉變更並儲存
+            # 正規化比較函數：處理浮點數精度和 NaN 問題
+            def normalize_portfolio(portfolio):
+                """將 portfolio 正規化以便比較"""
+                normalized = []
+                for stock in portfolio:
+                    normalized_stock = {
+                        'code': str(stock.get('code', '')).strip(),
+                        'name': str(stock.get('name', '')).strip(),
+                        'shares': int(stock.get('shares', 0)) if pd.notna(stock.get('shares')) else 0,
+                        'cost': round(float(stock.get('cost', 0)), 2) if pd.notna(stock.get('cost')) else 0.0
+                    }
+                    normalized.append(normalized_stock)
+                return normalized
             
             current_portfolio = st.session_state['family_portfolios'][member]
             
-            if new_portfolio != current_portfolio:
+            # 使用正規化後的資料進行比較
+            normalized_new = normalize_portfolio(new_portfolio)
+            normalized_current = normalize_portfolio(current_portfolio)
+            
+            if normalized_new != normalized_current:
                 # 檢查是否有新增的股票且沒有名稱，嘗試自動補全
                 for stock in new_portfolio:
                     if stock['code'] and (not stock.get('name') or stock['name'] == ""):

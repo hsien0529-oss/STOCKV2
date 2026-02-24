@@ -6,6 +6,7 @@ import datetime
 import urllib.parse
 import json
 import os
+import plotly.express as px
 
 # --- 1. 設定頁面樣式 ---
 st.set_page_config(page_title="全家股票看板", layout="wide", page_icon="📈")
@@ -46,7 +47,7 @@ def load_history():
         try:
             with open(HISTORY_FILE, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
+        except (json.JSONDecodeError, ValueError, IOError):
             return {}
     return {}
 
@@ -64,17 +65,15 @@ family_portfolios = st.session_state['family_portfolios']
 @st.cache_data(ttl=300)
 def get_market_data(all_codes):
     """獲取即時股價"""
+    if not all_codes:
+        return {}
     unique_tickers = list(set(all_codes))
     try:
-        # 使用 yfinance 批量獲取
         tickers = yf.Tickers(" ".join(unique_tickers))
-        # 獲取當前價格 (使用 fast_info 或 history)
         prices = {}
         for code in unique_tickers:
             try:
-                # 嘗試獲取最新價格
                 ticker = tickers.tickers[code]
-                # 優先使用 fast_info.last_price，如果沒有則用 history
                 price = ticker.fast_info.last_price
                 if price is None:
                      hist = ticker.history(period="1d")
@@ -91,30 +90,28 @@ def get_market_data(all_codes):
 @st.cache_data(ttl=3600)
 def get_dividends(all_codes, year):
     """獲取指定年份的股利總和 (每股)"""
+    if not all_codes:
+        return {}
     unique_tickers = list(set(all_codes))
     dividends_map = {}
     
-    # yfinance 獲取股利比較慢，這裡做個進度條
-    progress_bar = st.progress(0, text="正在獲取股利資料...")
-    total = len(unique_tickers)
-    
-    for i, code in enumerate(unique_tickers):
+    for code in unique_tickers:
         try:
             ticker = yf.Ticker(code)
             divs = ticker.dividends
-            # 篩選年份
             if not divs.empty:
-                divs.index = divs.index.tz_localize(None) # 移除時區以便比較
+                # 安全處理時區
+                try:
+                    divs.index = divs.index.tz_localize(None)
+                except TypeError:
+                    pass  # 已經是 naive datetime
                 year_divs = divs[divs.index.year == year]
                 dividends_map[code] = year_divs.sum()
             else:
                 dividends_map[code] = 0.0
         except Exception:
             dividends_map[code] = 0.0
-        
-        progress_bar.progress((i + 1) / total, text=f"正在獲取 {code} 股利...")
     
-    progress_bar.empty()
     return dividends_map
 
 @st.cache_data(ttl=1800)
@@ -129,6 +126,19 @@ def color_pl(val):
     color = '#ff4b4b' if val > 0 else '#2dc937' if val < 0 else 'white'
     return f'color: {color}'
 
+def _normalize_portfolio(portfolio):
+    """將 portfolio 正規化以便比較"""
+    normalized = []
+    for stock in portfolio:
+        normalized_stock = {
+            'code': str(stock.get('code', '')).strip(),
+            'name': str(stock.get('name', '')).strip(),
+            'shares': int(stock.get('shares', 0)) if pd.notna(stock.get('shares')) else 0,
+            'cost': round(float(stock.get('cost', 0)), 2) if pd.notna(stock.get('cost')) else 0.0
+        }
+        normalized.append(normalized_stock)
+    return normalized
+
 # --- 4. 數據處理 ---
 
 # 收集所有代碼
@@ -138,19 +148,25 @@ for member, stocks in family_portfolios.items():
         all_codes_list.append(stock['code'])
 
 # 獲取數據
-with st.spinner('更新股價中...'):
-    current_prices = get_market_data(all_codes_list)
+if all_codes_list:
+    with st.spinner('更新股價中...'):
+        current_prices = get_market_data(all_codes_list)
+else:
+    current_prices = {}
 
 # 獲取今年股利
 current_year = datetime.datetime.now().year
-with st.spinner(f'計算 {current_year} 年股利中...'):
-    dividend_data = get_dividends(all_codes_list, current_year)
-    
-    # 如果今年總股利為 0 (年初可能還沒發)，則改抓去年
-    if sum(dividend_data.values()) == 0:
-        st.toast(f"⚠️ {current_year} 年尚無配息資料，已自動切換顯示 {current_year-1} 年股利。", icon="ℹ️")
-        current_year = current_year - 1
+if all_codes_list:
+    with st.spinner(f'計算 {current_year} 年股利中...'):
         dividend_data = get_dividends(all_codes_list, current_year)
+        
+        # 如果今年總股利為 0 (年初可能還沒發)，則改抓去年
+        if sum(dividend_data.values()) == 0:
+            st.toast(f"⚠️ {current_year} 年尚無配息資料，已自動切換顯示 {current_year-1} 年股利。", icon="ℹ️")
+            current_year = current_year - 1
+            dividend_data = get_dividends(all_codes_list, current_year)
+else:
+    dividend_data = {}
 
 # 計算邏輯
 family_summary = []
@@ -247,28 +263,37 @@ save_history(history_data)
 # 總覽區塊
 st.header("📊 全家資產總覽")
 col1, col2, col3, col4 = st.columns(4)
-col1.metric("💰 全家總資產", f"${int(total_family_assets):,}")
+col1.metric("💰 全家總資產", f"NT${int(total_family_assets):,}")
 col2.metric(
     "📈 全家總獲利", 
-    f"${int(total_family_pl):,}", 
+    f"NT${int(total_family_pl):,}", 
     f"{round(total_family_pl/total_family_cost*100, 2)}%" if total_family_cost > 0 else "0%"
 )
-col3.metric(f"💵 {current_year} 總股利", f"${int(total_family_div):,}")
+col3.metric(f"💵 {current_year} 總股利", f"NT${int(total_family_div):,}")
 col4.metric("👥 成員數", f"{len(family_portfolios)} 人")
 
 # 圖表區塊
+df_summary = pd.DataFrame(family_summary)
 c1, c2 = st.columns([2, 1])
 with c1:
     st.subheader("資產分佈")
-    df_summary = pd.DataFrame(family_summary)
     st.bar_chart(df_summary, x="成員", y=["總資產", "總獲利"], color=["#36a2eb", "#ff6384"])
 
 with c2:
     st.subheader("資產佔比")
-    # 簡單的圓餅圖替代方案 (Streamlit 原生不支援 pie chart，用 dataframe 顯示佔比)
-    df_pie = df_summary[["成員", "總資產"]].copy()
-    df_pie["佔比(%)"] = (df_pie["總資產"] / total_family_assets * 100).round(1)
-    st.dataframe(df_pie.set_index("成員"), use_container_width=True)
+    if total_family_assets > 0:
+        fig = px.pie(
+            df_summary, values="總資產", names="成員",
+            hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2
+        )
+        fig.update_layout(
+            showlegend=True, margin=dict(t=20, b=20, l=20, r=20),
+            height=300, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(size=13)
+        )
+        st.plotly_chart(fig, use_container_width=True)
+    else:
+        st.info("尚無資產資料")
 
 st.markdown("---")
 
@@ -280,13 +305,13 @@ for i, (member, data) in enumerate(processed_data.items()):
     with tabs[i]:
         # 成員概況
         m1, m2, m3 = st.columns(3)
-        m1.metric("個人總資產", f"${int(data['total_assets']):,}")
+        m1.metric("個人總資產", f"NT${int(data['total_assets']):,}")
         m2.metric(
             "個人總獲利", 
-            f"${int(data['total_pl']):,}", 
+            f"NT${int(data['total_pl']):,}", 
             f"{round(data['total_pl']/data['total_cost']*100, 2)}%" if data['total_cost'] > 0 else "0%"
         )
-        m3.metric(f"{current_year} 已領股利", f"${int(data['total_div']):,}")
+        m3.metric(f"{current_year} 已領股利", f"NT${int(data['total_div']):,}")
         
         # 持股表格
         st.dataframe(
@@ -333,25 +358,10 @@ for i, (member, data) in enumerate(processed_data.items()):
             # 轉換回 list of dicts
             new_portfolio = edited_df.to_dict('records')
             
-            # 正規化比較函數：處理浮點數精度和 NaN 問題
-            def normalize_portfolio(portfolio):
-                """將 portfolio 正規化以便比較"""
-                normalized = []
-                for stock in portfolio:
-                    normalized_stock = {
-                        'code': str(stock.get('code', '')).strip(),
-                        'name': str(stock.get('name', '')).strip(),
-                        'shares': int(stock.get('shares', 0)) if pd.notna(stock.get('shares')) else 0,
-                        'cost': round(float(stock.get('cost', 0)), 2) if pd.notna(stock.get('cost')) else 0.0
-                    }
-                    normalized.append(normalized_stock)
-                return normalized
-            
+            # 正規化比較：處理浮點數精度和 NaN 問題
             current_portfolio = st.session_state['family_portfolios'][member]
-            
-            # 使用正規化後的資料進行比較
-            normalized_new = normalize_portfolio(new_portfolio)
-            normalized_current = normalize_portfolio(current_portfolio)
+            normalized_new = _normalize_portfolio(new_portfolio)
+            normalized_current = _normalize_portfolio(current_portfolio)
             
             if normalized_new != normalized_current:
                 # 檢查是否有新增的股票且沒有名稱，嘗試自動補全
@@ -439,8 +449,13 @@ news_items = get_news("台股 財經")
 
 if news_items:
     for item in news_items:
-        with st.expander(f"{item.title} - {item.published[:16]}"):
-            st.markdown(f"**來源**: {item.source.title}")
+        pub_date = getattr(item, 'published', '')[:16] if hasattr(item, 'published') else ''
+        source_name = ''
+        if hasattr(item, 'source') and hasattr(item.source, 'title'):
+            source_name = item.source.title
+        with st.expander(f"{item.title} - {pub_date}"):
+            if source_name:
+                st.markdown(f"**來源**: {source_name}")
             st.markdown(f"[閱讀全文]({item.link})")
             if 'summary' in item:
                 st.markdown(item.summary, unsafe_allow_html=True)

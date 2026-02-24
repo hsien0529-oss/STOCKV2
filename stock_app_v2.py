@@ -29,8 +29,9 @@ st.title("📈 全家股票看板")
 st.markdown("---")
 
 # --- 2. 定義全家人投資組合 (使用 JSON 檔案儲存) ---
-DATA_FILE = "portfolios.json"
-HISTORY_FILE = "history.json"
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE = os.path.join(_BASE_DIR, "portfolios.json")
+HISTORY_FILE = os.path.join(_BASE_DIR, "history.json")
 
 def load_portfolios():
     if os.path.exists(DATA_FILE):

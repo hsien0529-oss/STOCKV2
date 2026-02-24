@@ -274,32 +274,39 @@ col4.metric("👥 成員數", f"{len(family_portfolios)} 人")
 
 # 圖表區塊
 df_summary = pd.DataFrame(family_summary)
-c1, c2 = st.columns([2, 1])
-with c1:
-    st.subheader("資產分佈")
-    st.bar_chart(df_summary, x="成員", y=["總資產", "總獲利"], color=["#36a2eb", "#ff6384"])
+if not df_summary.empty:
+    c1, c2 = st.columns([2, 1])
+    with c1:
+        st.subheader("資產分佈")
+        st.bar_chart(df_summary, x="成員", y=["總資產", "總獲利"], color=["#36a2eb", "#ff6384"])
 
-with c2:
-    st.subheader("資產佔比")
-    if total_family_assets > 0:
-        fig = px.pie(
-            df_summary, values="總資產", names="成員",
-            hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2
-        )
-        fig.update_layout(
-            showlegend=True, margin=dict(t=20, b=20, l=20, r=20),
-            height=300, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
-            font=dict(size=13)
-        )
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.info("尚無資產資料")
+    with c2:
+        st.subheader("資產佔比")
+        if total_family_assets > 0:
+            fig = px.pie(
+                df_summary, values="總資產", names="成員",
+                hole=0.4, color_discrete_sequence=px.colors.qualitative.Set2
+            )
+            fig.update_layout(
+                showlegend=True, margin=dict(t=20, b=20, l=20, r=20),
+                height=300, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)',
+                font=dict(size=13)
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("尚無資產資料")
+else:
+    st.info("👇 尚無投資組合資料，請在下方「成員持股詳情」中新增股票。")
 
 st.markdown("---")
 
 # 成員詳細資訊
 st.subheader("👤 成員持股詳情")
-tabs = st.tabs(list(family_portfolios.keys()))
+if processed_data:
+    tabs = st.tabs(list(family_portfolios.keys()))
+else:
+    st.info("尚無成員資料。如需新增成員，請在本機編輯 portfolios.json 後重新上傳。")
+    tabs = []
 
 for i, (member, data) in enumerate(processed_data.items()):
     with tabs[i]:

@@ -1,0 +1,13 @@
+# 個人投資資料（含敏感資訊，不上傳）
+portfolios.json
+history.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# IDE
+.vscode/
+.idea/

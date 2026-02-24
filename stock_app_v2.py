@@ -379,7 +379,7 @@ for i, (member, data) in enumerate(processed_data.items()):
                             if not name or name == code:
                                 name = code.replace(".TW", "")
                             stock['name'] = name
-                        except:
+                        except Exception:
                             stock['name'] = code
 
                 # 更新 Session State

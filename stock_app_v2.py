@@ -63,9 +63,9 @@ family_portfolios = st.session_state['family_portfolios']
 
 # --- 3. 函數定義 ---
 
-@st.cache_data(ttl=300)
+@st.cache_data(ttl=60)
 def get_market_data(all_codes):
-    """獲取即時股價"""
+    """獲取即時股價 (盤中即時 / 盤後收盤價)"""
     if not all_codes:
         return {}
     unique_tickers = list(set(all_codes))
@@ -74,17 +74,27 @@ def get_market_data(all_codes):
         try:
             ticker = yf.Ticker(code)
             price = None
-            # 優先使用 history 取得最新收盤價 (對台股較穩定)
+            # 1. 優先: fast_info.last_price (最即時，含盤中價)
             try:
-                hist = ticker.history(period="5d")
-                if not hist.empty:
-                    price = hist['Close'].iloc[-1]
+                p = ticker.fast_info.last_price
+                if p is not None and not pd.isna(p) and p > 0:
+                    price = p
             except Exception:
                 pass
-            # 備用: 嘗試 fast_info
+            # 2. 備用: 1分鐘級盤中資料
             if price is None:
                 try:
-                    price = ticker.fast_info.last_price
+                    hist = ticker.history(period="1d", interval="1m")
+                    if not hist.empty:
+                        price = hist['Close'].iloc[-1]
+                except Exception:
+                    pass
+            # 3. 最後備用: 近5日收盤價
+            if price is None:
+                try:
+                    hist = ticker.history(period="5d")
+                    if not hist.empty:
+                        price = hist['Close'].iloc[-1]
                 except Exception:
                     pass
             prices[code] = price

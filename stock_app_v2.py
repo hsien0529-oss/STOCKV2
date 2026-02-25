@@ -69,24 +69,28 @@ def get_market_data(all_codes):
     if not all_codes:
         return {}
     unique_tickers = list(set(all_codes))
-    try:
-        tickers = yf.Tickers(" ".join(unique_tickers))
-        prices = {}
-        for code in unique_tickers:
+    prices = {}
+    for code in unique_tickers:
+        try:
+            ticker = yf.Ticker(code)
+            price = None
+            # 優先使用 history 取得最新收盤價 (對台股較穩定)
             try:
-                ticker = tickers.tickers[code]
-                price = ticker.fast_info.last_price
-                if price is None:
-                     hist = ticker.history(period="1d")
-                     if not hist.empty:
-                         price = hist['Close'].iloc[-1]
-                prices[code] = price
+                hist = ticker.history(period="5d")
+                if not hist.empty:
+                    price = hist['Close'].iloc[-1]
             except Exception:
-                prices[code] = None
-        return prices
-    except Exception as e:
-        st.error(f"獲取股價失敗: {e}")
-        return {}
+                pass
+            # 備用: 嘗試 fast_info
+            if price is None:
+                try:
+                    price = ticker.fast_info.last_price
+                except Exception:
+                    pass
+            prices[code] = price
+        except Exception:
+            prices[code] = None
+    return prices
 
 @st.cache_data(ttl=3600)
 def get_dividends(all_codes, year):
@@ -155,17 +159,11 @@ if all_codes_list:
 else:
     current_prices = {}
 
-# 獲取今年股利
-current_year = datetime.datetime.now().year
+# 獲取今年股利 (固定顯示 2026 年)
+current_year = 2026
 if all_codes_list:
     with st.spinner(f'計算 {current_year} 年股利中...'):
         dividend_data = get_dividends(all_codes_list, current_year)
-        
-        # 如果今年總股利為 0 (年初可能還沒發)，則改抓去年
-        if sum(dividend_data.values()) == 0:
-            st.toast(f"⚠️ {current_year} 年尚無配息資料，已自動切換顯示 {current_year-1} 年股利。", icon="ℹ️")
-            current_year = current_year - 1
-            dividend_data = get_dividends(all_codes_list, current_year)
 else:
     dividend_data = {}
 
